@@ -17,7 +17,7 @@ Esta es una aplicación web que permite calcular el interés compuesto de una in
 ## Technologies / Tecnologías
 
 - HTML5
-- CSS3
+- Tailwind CSS
 - JavaScript
 
 ## Roadmap - Future Improvements / Futuras Mejoras
