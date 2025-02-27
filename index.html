@@ -7,13 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-100 flex min-h-screen">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-full">
+<div class="bg-white p-6 rounded-lg shadow-lg w-full">
       <div class="flex justify-between items-center mb-4">
-        <div></div>
         <div>
           <h2
             class="text-xl font-bold text-center"
-            data-en="Investment Calculator"
+data-en="Investment Calculator"
             data-es="Calculadora de Inversión"
           ></h2>
         </div>
@@ -24,7 +23,7 @@
         </select>
       </div>
 
-      <div class="grid grid-cols-2 gap-4 max-w-4xl mx-auto mb-6">
+      <div class="grid grid-cols-3 gap-4 max-w-3xl mb-6">
         <div>
           <label
             class="block mb-1 text-sm"
@@ -46,26 +45,6 @@
         <div>
           <label
             class="block mb-1 text-sm"
-            data-en="Number of Years:"
-            data-es="Cantidad de Años:"
-          >
-            Number of Years:
-          </label>
-          <input
-            type="number"
-            id="years"
-            class="w-full p-1.5 border rounded"
-            value="10"
-            min="1"
-            max="100"
-            data-en-title="Define your investment time horizon. How many years you plan to maintain your investment (between 1 and 100 years)."
-            data-es-title="Define el horizonte temporal de tu inversión. Cuántos años planeas mantener tu inversión (entre 1 y 100 años)."
-          />
-        </div>
-
-        <div>
-          <label
-            class="block mb-1 text-sm"
             data-en="Initial Annual Interest (%):"
             data-es="Interés Anual Inicial (%):"
           >
@@ -80,6 +59,45 @@
             max="100"
             data-en-title="Annual interest rate that your investment will start with. This percentage represents the expected return in the first year."
             data-es-title="Tasa de interés anual con la que comenzará tu inversión. Este porcentaje representa el rendimiento esperado en el primer año."
+          />
+        </div>
+
+        <div>
+          <label
+            class="block mb-1 text-sm"
+            data-en="Monthly Income (USD):"
+            data-es="Ingresos Mensuales (USD):"
+          >
+            Monthly Income (USD):
+          </label>
+          <input
+            type="number"
+            id="monthlyIncome"
+            class="w-full p-1.5 border rounded"
+            value="3000"
+            min="0"
+            data-en-title="Enter your total monthly income. This will allow calculating your savings capacity and wealth growth."
+            data-es-title="Ingresa tus ingresos mensuales totales. Esto permitirá calcular tu capacidad de ahorro y crecimiento patrimonial."
+          />
+        </div>
+
+        <div>
+          <label
+            class="block mb-1 text-sm"
+            data-en="Number of Years:"
+            data-es="Cantidad de Años:"
+          >
+            Number of Years:
+          </label>
+          <input
+            type="number"
+            id="years"
+            class="w-full p-1.5 border rounded"
+            value="10"
+            min="1"
+            max="100"
+            data-en-title="Define your investment time horizon. How many years you plan to maintain your investment (between 1 and 100 years)."
+            data-es-title="Define el horizonte temporal de tu inversión. Cuántos años planeas mantener tu inversión (entre 1 y 100 años)."
           />
         </div>
 
@@ -119,25 +137,6 @@
             min="0"
             data-en-title="Enter your total monthly expenses. This will help calculate your savings capacity and impact on your wealth."
             data-es-title="Ingresa tus gastos mensuales totales. Esto ayudará a calcular tu capacidad de ahorro y el impacto en tu patrimonio."
-          />
-        </div>
-
-        <div>
-          <label
-            class="block mb-1 text-sm"
-            data-en="Monthly Income (USD):"
-            data-es="Ingresos Mensuales (USD):"
-          >
-            Monthly Income (USD):
-          </label>
-          <input
-            type="number"
-            id="monthlyIncome"
-            class="w-full p-1.5 border rounded"
-            value="3000"
-            min="0"
-            data-en-title="Enter your total monthly income. This will allow calculating your savings capacity and wealth growth."
-            data-es-title="Ingresa tus ingresos mensuales totales. Esto permitirá calcular tu capacidad de ahorro y crecimiento patrimonial."
           />
         </div>
       </div>
