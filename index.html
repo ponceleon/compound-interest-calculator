@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora de Inversión</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+<body class="bg-gray-100 flex min-h-screen">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full">
+      <h2 class="text-xl font-bold mb-4 text-center">
+        Calculadora de Inversión
+      </h2>
+
+      <div class="grid grid-cols-2 gap-4 max-w-4xl mx-auto mb-6">
+        <div>
+          <label class="block mb-1 text-sm">Monto Inicial de Inversión (USD):</label>
+          <input
+            type="number"
+            id="initialInvestment"
+            class="w-full p-1.5 border rounded"
+            value="10000"
+          />
+        </div>
+
+        <div>
+          <label class="block mb-1 text-sm">Cantidad de Años:</label>
+          <input
+            type="number"
+            id="years"
+            class="w-full p-1.5 border rounded"
+            value="10"
+            min="1"
+            max="100"
+          />
+        </div>
+
+        <div>
+          <label class="block mb-1 text-sm">Interés Anual Inicial (%):</label>
+          <input
+            type="number"
+            id="initialInterest"
+            class="w-full p-1.5 border rounded"
+            value="100"
+            min="0"
+            max="100"
+          />
+        </div>
+
+        <div>
+          <label class="block mb-1 text-sm">Interés Anual Final (%):</label>
+          <input
+            type="number"
+            id="finalInterest"
+            class="w-full p-1.5 border rounded"
+            value="10"
+            min="0"
+            max="100"
+          />
+        </div>
+
+        <div>
+          <label class="block mb-1 text-sm">Egresos Mensuales (USD):</label>
+          <input
+            type="number"
+            id="monthlyExpenses"
+            class="w-full p-1.5 border rounded"
+            value="2500"
+            min="0"
+          />
+        </div>
+
+        <div>
+          <label class="block mb-1 text-sm">Ingresos Mensuales (USD):</label>
+          <input
+            type="number"
+            id="monthlyIncome"
+            class="w-full p-1.5 border rounded"
+            value="3000"
+            min="0"
+          />
+        </div>
+      </div>
+
+      <table
+        class="w-full mt-6 border-collapse border border-gray-300 text-sm text-left"
+      >
+        <thead class="bg-gray-200 text-xs">
+          <tr>
+            <th class="border p-2">Año</th>
+            <th class="border p-2">USD Invertido</th>
+            <th class="border p-2">Interés Anual (%)</th>
+            <th class="border p-2">Ganancia Anual (USD)</th>
+            <th class="border p-2">Fortuna por Intereses</th>
+    <th class="border p-2">Ganancia Mensual</th>
+            <th class="border p-2">Ingresos Mensuales</th>
+            <th class="border p-2">Egresos Mensuales</th>
+            <th class="border p-2">Ahorro Mensual</th>
+            <th class="border p-2">Ganancia Mensual Neta</th>
+<th class="border p-2">Ahorros Anuales</th>
+            <th class="border p-2">Fortuna Total</th>
+          </tr>
+        </thead>
+        <tbody id="resultTable">
+          <!-- Los resultados aparecerán aquí -->
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      // Función para agregar event listeners a todos los inputs
+      function addInputListeners() {
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+          input.addEventListener('input', calculateInvestment);
+        });
+      }
+
+      // Llamar a la función cuando se carga la página
+      document.addEventListener('DOMContentLoaded', function() {
+        addInputListeners();
+        calculateInvestment(); // Calcular inicialmente
+      });
+
+      function calculateInvestment() {
+        const initialInvestment = parseFloat(
+          document.getElementById("initialInvestment").value
+        );
+        const initialInterest = parseFloat(
+          document.getElementById("initialInterest").value
+        );
+        const finalInterest = parseFloat(
+          document.getElementById("finalInterest").value
+        );
+        const years = parseInt(document.getElementById("years").value);
+        const monthlyExpenses = parseFloat(
+          document.getElementById("monthlyExpenses").value
+        ) || 0;
+        const monthlyIncome = parseFloat(
+          document.getElementById("monthlyIncome").value
+        ) || 0;
+
+        if (
+          isNaN(initialInvestment) ||
+          isNaN(initialInterest) ||
+          isNaN(finalInterest) ||
+          isNaN(years) ||
+          isNaN(monthlyExpenses) ||
+          isNaN(monthlyIncome) ||
+          initialInvestment <= 0 ||
+          years <= 0 ||
+          monthlyExpenses < 0 ||
+          monthlyIncome < 0
+        ) {
+          alert("Por favor ingresa valores válidos. Los valores mensuales no pueden ser negativos.");
+          return;
+        }
+
+        let tableHTML = '';
+        let accumulatedFortune = initialInvestment;
+
+        for (let year = 1; year <= years; year++) {
+          // Calcular el interés para el año actual usando interpolación lineal
+          const currentInterest = initialInterest - ((initialInterest - finalInterest) * (year - 1) / (years - 1));
+          
+          const annualGain = (accumulatedFortune * currentInterest) / 100;
+          const totalFortune = accumulatedFortune + annualGain;
+          const monthlyGain = annualGain / 12;
+          const monthlyNetGain = monthlyGain + monthlyIncome - monthlyExpenses;
+          const annualDifference = (monthlyIncome - monthlyExpenses) * 12;
+          const monthlySavings = monthlyIncome - monthlyExpenses;
+          const totalFortuneWithNetGain = totalFortune + annualDifference;
+
+          tableHTML += `
+            <tr class="border-t">
+                <td class="border p-2 text-center">${year}</td>
+                <td class="border p-2 text-center">$${Number(accumulatedFortune).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+                <td class="border p-2 text-center">${Number(currentInterest).toLocaleString('en-US', {maximumFractionDigits: 1})}%</td>
+                <td class="border p-2 text-center">$${Number(annualGain).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+                <td class="border p-2 text-center font-bold">$${Number(totalFortune).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+                <td class="border p-2 text-center">$${Number(monthlyGain).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+                <td class="border p-2 text-center text-green-500">+$${Number(monthlyIncome).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+                <td class="border p-2 text-center text-red-500">-$${Number(monthlyExpenses).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+                <td class="border p-2 text-center ${monthlySavings < 0 ? 'text-red-500' : 'text-green-500'}">${monthlySavings < 0 ? '-' : '+'}$${Math.abs(Number(monthlySavings)).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+                <td class="border p-2 text-center ${monthlyNetGain < 0 ? 'text-red-500' : 'text-green-500'}">${monthlyNetGain < 0 ? '-' : '+'}$${Math.abs(Number(monthlyNetGain)).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+                <td class="border p-2 text-center ${annualDifference < 0 ? 'text-red-500' : 'text-green-500'}">${annualDifference < 0 ? '-' : '+'}$${Math.abs(Number(annualDifference)).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+                <td class="border p-2 text-center font-bold">$${Number(totalFortuneWithNetGain).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+            </tr>
+          `;
+
+          accumulatedFortune = totalFortuneWithNetGain;
+        }
+
+        document.getElementById("resultTable").innerHTML = tableHTML;
+      }
+    </script>
+  </body>
+</html>
