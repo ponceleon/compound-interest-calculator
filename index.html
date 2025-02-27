@@ -1,30 +1,56 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculadora de Inversión</title>
+    <title>Investment Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-<body class="bg-gray-100 flex min-h-screen">
+  <body class="bg-gray-100 flex min-h-screen">
     <div class="bg-white p-6 rounded-lg shadow-lg w-full">
-      <h2 class="text-xl font-bold mb-4 text-center">
-        Calculadora de Inversión
-      </h2>
+      <div class="flex justify-between items-center mb-4">
+        <div></div>
+        <div>
+          <h2
+            class="text-xl font-bold text-center"
+            data-en="Investment Calculator"
+            data-es="Calculadora de Inversión"
+          ></h2>
+        </div>
+
+        <select id="languageSelector" class="p-1.5 border rounded">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
 
       <div class="grid grid-cols-2 gap-4 max-w-4xl mx-auto mb-6">
         <div>
-          <label class="block mb-1 text-sm">Monto Inicial de Inversión (USD):</label>
+          <label
+            class="block mb-1 text-sm"
+            data-en="Initial Investment Amount (USD):"
+            data-es="Monto Inicial de Inversión (USD):"
+          >
+            Initial Investment Amount (USD):
+          </label>
           <input
             type="number"
             id="initialInvestment"
             class="w-full p-1.5 border rounded"
             value="10000"
+            data-en-title="Enter the initial amount you plan to invest. This is the base capital you'll start your investment with."
+            data-es-title="Ingresa la cantidad inicial que planeas invertir. Este es el capital base con el que comenzarás tu inversión."
           />
         </div>
 
         <div>
-          <label class="block mb-1 text-sm">Cantidad de Años:</label>
+          <label
+            class="block mb-1 text-sm"
+            data-en="Number of Years:"
+            data-es="Cantidad de Años:"
+          >
+            Number of Years:
+          </label>
           <input
             type="number"
             id="years"
@@ -32,11 +58,19 @@
             value="10"
             min="1"
             max="100"
+            data-en-title="Define your investment time horizon. How many years you plan to maintain your investment (between 1 and 100 years)."
+            data-es-title="Define el horizonte temporal de tu inversión. Cuántos años planeas mantener tu inversión (entre 1 y 100 años)."
           />
         </div>
 
         <div>
-          <label class="block mb-1 text-sm">Interés Anual Inicial (%):</label>
+          <label
+            class="block mb-1 text-sm"
+            data-en="Initial Annual Interest (%):"
+            data-es="Interés Anual Inicial (%):"
+          >
+            Initial Annual Interest (%):
+          </label>
           <input
             type="number"
             id="initialInterest"
@@ -44,11 +78,19 @@
             value="100"
             min="0"
             max="100"
+            data-en-title="Annual interest rate that your investment will start with. This percentage represents the expected return in the first year."
+            data-es-title="Tasa de interés anual con la que comenzará tu inversión. Este porcentaje representa el rendimiento esperado en el primer año."
           />
         </div>
 
         <div>
-          <label class="block mb-1 text-sm">Interés Anual Final (%):</label>
+          <label
+            class="block mb-1 text-sm"
+            data-en="Final Annual Interest (%):"
+            data-es="Interés Anual Final (%):"
+          >
+            Final Annual Interest (%):
+          </label>
           <input
             type="number"
             id="finalInterest"
@@ -56,28 +98,46 @@
             value="10"
             min="0"
             max="100"
+            data-en-title="Expected annual interest rate at the end of the period. The calculator will interpolate between initial and final rates over the years."
+            data-es-title="Tasa de interés anual esperada al final del período. La calculadora realizará una interpolación entre la tasa inicial y final a lo largo de los años."
           />
         </div>
 
         <div>
-          <label class="block mb-1 text-sm">Egresos Mensuales (USD):</label>
+          <label
+            class="block mb-1 text-sm"
+            data-en="Monthly Expenses (USD):"
+            data-es="Egresos Mensuales (USD):"
+          >
+            Monthly Expenses (USD):
+          </label>
           <input
             type="number"
             id="monthlyExpenses"
             class="w-full p-1.5 border rounded"
             value="2500"
             min="0"
+            data-en-title="Enter your total monthly expenses. This will help calculate your savings capacity and impact on your wealth."
+            data-es-title="Ingresa tus gastos mensuales totales. Esto ayudará a calcular tu capacidad de ahorro y el impacto en tu patrimonio."
           />
         </div>
 
         <div>
-          <label class="block mb-1 text-sm">Ingresos Mensuales (USD):</label>
+          <label
+            class="block mb-1 text-sm"
+            data-en="Monthly Income (USD):"
+            data-es="Ingresos Mensuales (USD):"
+          >
+            Monthly Income (USD):
+          </label>
           <input
             type="number"
             id="monthlyIncome"
             class="w-full p-1.5 border rounded"
             value="3000"
             min="0"
+            data-en-title="Enter your total monthly income. This will allow calculating your savings capacity and wealth growth."
+            data-es-title="Ingresa tus ingresos mensuales totales. Esto permitirá calcular tu capacidad de ahorro y crecimiento patrimonial."
           />
         </div>
       </div>
@@ -87,40 +147,186 @@
       >
         <thead class="bg-gray-200 text-xs">
           <tr>
-            <th class="border p-2">Año</th>
-            <th class="border p-2">USD Invertido</th>
-            <th class="border p-2">Interés Anual (%)</th>
-            <th class="border p-2">Ganancia Anual (USD)</th>
-            <th class="border p-2">Fortuna por Intereses</th>
-    <th class="border p-2">Ganancia Mensual</th>
-            <th class="border p-2">Ingresos Mensuales</th>
-            <th class="border p-2">Egresos Mensuales</th>
-            <th class="border p-2">Ahorro Mensual</th>
-            <th class="border p-2">Ganancia Mensual Neta</th>
-<th class="border p-2">Ahorros Anuales</th>
-            <th class="border p-2">Fortuna Total</th>
+            <th class="border p-2" data-en="Year" data-es="Año">Year</th>
+            <th
+              class="border p-2"
+              data-en="USD Invested"
+              data-es="USD Invertido"
+            >
+              USD Invested
+            </th>
+            <th
+              class="border p-2"
+              data-en="Annual Interest (%)"
+              data-es="Interés Anual (%)"
+            >
+              Annual Interest (%)
+            </th>
+            <th
+              class="border p-2"
+              data-en="Annual Gain (USD)"
+              data-es="Ganancia Anual (USD)"
+            >
+              Annual Gain (USD)
+            </th>
+            <th
+              class="border p-2"
+              data-en="Interest Fortune"
+              data-es="Fortuna por Intereses"
+            >
+              Interest Fortune
+            </th>
+            <th
+              class="border p-2"
+              data-en="Monthly Gain"
+              data-es="Ganancia Mensual"
+            >
+              Monthly Gain
+            </th>
+            <th
+              class="border p-2"
+              data-en="Monthly Income"
+              data-es="Ingresos Mensuales"
+            >
+              Monthly Income
+            </th>
+            <th
+              class="border p-2"
+              data-en="Monthly Expenses"
+              data-es="Egresos Mensuales"
+            >
+              Monthly Expenses
+            </th>
+            <th
+              class="border p-2"
+              data-en="Monthly Savings"
+              data-es="Ahorro Mensual"
+            >
+              Monthly Savings
+            </th>
+            <th
+              class="border p-2"
+              data-en="Net Monthly Gain"
+              data-es="Ganancia Mensual Neta"
+            >
+              Net Monthly Gain
+            </th>
+            <th
+              class="border p-2"
+              data-en="Annual Savings"
+              data-es="Ahorros Anuales"
+            >
+              Annual Savings
+            </th>
+            <th
+              class="border p-2"
+              data-en="Total Fortune"
+              data-es="Fortuna Total"
+            >
+              Total Fortune
+            </th>
           </tr>
         </thead>
         <tbody id="resultTable">
-          <!-- Los resultados aparecerán aquí -->
+          <!-- Results will appear here -->
         </tbody>
       </table>
+
+      <div class="mt-8 w-full bg-white shadow-lg p-4">
+        <div
+          class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
+        >
+          <div class="text-sm text-gray-600 max-w-2xl">
+            <p class="mb-2">
+              <strong
+                data-en="Why use this calculator?"
+                data-es="¿Por qué usar esta calculadora?"
+                >Why use this calculator?</strong
+              >
+            </p>
+            <p
+              data-en="This tool helps you visualize the power of compound interest and plan your financial future. Simulate different investment scenarios considering your income, expenses, and savings goals. Perfect for creating a personalized investment plan and understanding how your financial decisions today impact your future wealth."
+              data-es="Esta herramienta te ayuda a visualizar el poder del interés compuesto y planificar tu futuro financiero. Simula diferentes escenarios de inversión considerando tus ingresos, gastos y metas de ahorro. Ideal para crear un plan de inversión personalizado y entender cómo tus decisiones financieras de hoy impactan en tu patrimonio futuro."
+            >
+              This tool helps you visualize the power of compound interest and
+              plan your financial future. Simulate different investment
+              scenarios considering your income, expenses, and savings goals.
+              Perfect for creating a personalized investment plan and
+              understanding how your financial decisions today impact your
+              future wealth.
+            </p>
+          </div>
+
+          <a
+            href="https://github.com/ponceleon/compound-interest-calculator"
+            target="_blank"
+            class="flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            <span data-en="View on GitHub" data-es="Ver en GitHub"
+              >View on GitHub</span
+            >
+          </a>
+        </div>
+      </div>
     </div>
 
     <script>
-      // Función para agregar event listeners a todos los inputs
-      function addInputListeners() {
-        const inputs = document.querySelectorAll('input');
-        inputs.forEach(input => {
-          input.addEventListener('input', calculateInvestment);
+      // Language management
+      function detectLanguage() {
+        const browserLang = navigator.language.split("-")[0];
+        return ["en", "es"].includes(browserLang) ? browserLang : "en";
+      }
+
+      function setLanguage(lang) {
+        document.documentElement.lang = lang;
+        document.querySelectorAll("[data-" + lang + "]").forEach((element) => {
+          const text = element.getAttribute("data-" + lang);
+          if (text) element.textContent = text;
+        });
+
+        // Update tooltips
+        document.querySelectorAll("input").forEach((input) => {
+          const title = input.getAttribute("data-" + lang + "-title");
+          if (title) input.title = title;
         });
       }
 
-      // Llamar a la función cuando se carga la página
-      document.addEventListener('DOMContentLoaded', function() {
+      // Initialize language
+      document.addEventListener("DOMContentLoaded", function () {
+        const defaultLang = detectLanguage();
+        const languageSelector = document.getElementById("languageSelector");
+        languageSelector.value = defaultLang;
+        setLanguage(defaultLang);
+
+        // Language change event listener
+        languageSelector.addEventListener("change", (e) => {
+          setLanguage(e.target.value);
+        });
+
+        // Add input listeners and calculate initially
         addInputListeners();
-        calculateInvestment(); // Calcular inicialmente
+        calculateInvestment();
       });
+
+      // Función para agregar event listeners a todos los inputs
+      function addInputListeners() {
+        const inputs = document.querySelectorAll("input");
+        inputs.forEach((input) => {
+          input.addEventListener("input", calculateInvestment);
+        });
+      }
 
       function calculateInvestment() {
         const initialInvestment = parseFloat(
@@ -133,12 +339,10 @@
           document.getElementById("finalInterest").value
         );
         const years = parseInt(document.getElementById("years").value);
-        const monthlyExpenses = parseFloat(
-          document.getElementById("monthlyExpenses").value
-        ) || 0;
-        const monthlyIncome = parseFloat(
-          document.getElementById("monthlyIncome").value
-        ) || 0;
+        const monthlyExpenses =
+          parseFloat(document.getElementById("monthlyExpenses").value) || 0;
+        const monthlyIncome =
+          parseFloat(document.getElementById("monthlyIncome").value) || 0;
 
         if (
           isNaN(initialInvestment) ||
@@ -152,17 +356,23 @@
           monthlyExpenses < 0 ||
           monthlyIncome < 0
         ) {
-          alert("Por favor ingresa valores válidos. Los valores mensuales no pueden ser negativos.");
+          const lang = document.documentElement.lang;
+          const errorMessage =
+            lang === "es"
+              ? "Por favor ingresa valores válidos. Los valores mensuales no pueden ser negativos."
+              : "Please enter valid values. Monthly values cannot be negative.";
+          alert(errorMessage);
           return;
         }
 
-        let tableHTML = '';
+        let tableHTML = "";
         let accumulatedFortune = initialInvestment;
 
         for (let year = 1; year <= years; year++) {
-          // Calcular el interés para el año actual usando interpolación lineal
-          const currentInterest = initialInterest - ((initialInterest - finalInterest) * (year - 1) / (years - 1));
-          
+          const currentInterest =
+            initialInterest -
+            ((initialInterest - finalInterest) * (year - 1)) / (years - 1);
+
           const annualGain = (accumulatedFortune * currentInterest) / 100;
           const totalFortune = accumulatedFortune + annualGain;
           const monthlyGain = annualGain / 12;
@@ -174,17 +384,45 @@
           tableHTML += `
             <tr class="border-t">
                 <td class="border p-2 text-center">${year}</td>
-                <td class="border p-2 text-center">$${Number(accumulatedFortune).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
-                <td class="border p-2 text-center">${Number(currentInterest).toLocaleString('en-US', {maximumFractionDigits: 1})}%</td>
-                <td class="border p-2 text-center">$${Number(annualGain).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
-                <td class="border p-2 text-center font-bold">$${Number(totalFortune).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
-                <td class="border p-2 text-center">$${Number(monthlyGain).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
-                <td class="border p-2 text-center text-green-500">+$${Number(monthlyIncome).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
-                <td class="border p-2 text-center text-red-500">-$${Number(monthlyExpenses).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
-                <td class="border p-2 text-center ${monthlySavings < 0 ? 'text-red-500' : 'text-green-500'}">${monthlySavings < 0 ? '-' : '+'}$${Math.abs(Number(monthlySavings)).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
-                <td class="border p-2 text-center ${monthlyNetGain < 0 ? 'text-red-500' : 'text-green-500'}">${monthlyNetGain < 0 ? '-' : '+'}$${Math.abs(Number(monthlyNetGain)).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
-                <td class="border p-2 text-center ${annualDifference < 0 ? 'text-red-500' : 'text-green-500'}">${annualDifference < 0 ? '-' : '+'}$${Math.abs(Number(annualDifference)).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
-                <td class="border p-2 text-center font-bold">$${Number(totalFortuneWithNetGain).toLocaleString('en-US', {maximumFractionDigits: 0})}</td>
+                <td class="border p-2 text-center">$${Number(
+                  accumulatedFortune
+                ).toLocaleString("en-US", { maximumFractionDigits: 0 })}</td>
+                <td class="border p-2 text-center">${Number(
+                  currentInterest
+                ).toLocaleString("en-US", { maximumFractionDigits: 1 })}%</td>
+                <td class="border p-2 text-center">$${Number(
+                  annualGain
+                ).toLocaleString("en-US", { maximumFractionDigits: 0 })}</td>
+                <td class="border p-2 text-center font-bold">$${Number(
+                  totalFortune
+                ).toLocaleString("en-US", { maximumFractionDigits: 0 })}</td>
+                <td class="border p-2 text-center">$${Number(
+                  monthlyGain
+                ).toLocaleString("en-US", { maximumFractionDigits: 0 })}</td>
+                <td class="border p-2 text-center text-green-500">+$${Number(
+                  monthlyIncome
+                ).toLocaleString("en-US", { maximumFractionDigits: 0 })}</td>
+                <td class="border p-2 text-center text-red-500">-$${Number(
+                  monthlyExpenses
+                ).toLocaleString("en-US", { maximumFractionDigits: 0 })}</td>
+                <td class="border p-2 text-center ${
+                  monthlySavings < 0 ? "text-red-500" : "text-green-500"
+                }">${monthlySavings < 0 ? "-" : "+"}$${Math.abs(
+            monthlySavings
+          ).toLocaleString("en-US", { maximumFractionDigits: 0 })}</td>
+                <td class="border p-2 text-center ${
+                  monthlyNetGain < 0 ? "text-red-500" : "text-green-500"
+                }">${monthlyNetGain < 0 ? "-" : "+"}$${Math.abs(
+            monthlyNetGain
+          ).toLocaleString("en-US", { maximumFractionDigits: 0 })}</td>
+                <td class="border p-2 text-center ${
+                  annualDifference < 0 ? "text-red-500" : "text-green-500"
+                }">${annualDifference < 0 ? "-" : "+"}$${Math.abs(
+            annualDifference
+          ).toLocaleString("en-US", { maximumFractionDigits: 0 })}</td>
+                <td class="border p-2 text-center font-bold">$${Number(
+                  totalFortuneWithNetGain
+                ).toLocaleString("en-US", { maximumFractionDigits: 0 })}</td>
             </tr>
           `;
 
